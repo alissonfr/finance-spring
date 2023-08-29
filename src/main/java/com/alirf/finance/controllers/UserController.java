@@ -68,6 +68,7 @@ public class UserController {
             @ApiResponse(responseCode = "403", description = "Usuário não autorizado."),
             @ApiResponse(responseCode = "500", description = "Erro de requisição.")
     })
+    @Operation(summary = "Criar usuário", description= "Cria um novo usuário")
     public ResponseEntity<?> create(
             @Parameter(description = "Dados do usuário a ser atualizado") @RequestBody User user
     ) {

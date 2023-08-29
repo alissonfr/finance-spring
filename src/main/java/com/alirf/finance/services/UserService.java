@@ -20,8 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public Page<User> find(String name, Pageable page) {
         return userRepository.findAll((root, query, builder) -> builder.and(filterUsers(root, builder, name)), page);
