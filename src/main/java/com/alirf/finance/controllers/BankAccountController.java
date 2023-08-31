@@ -1,6 +1,8 @@
 package com.alirf.finance.controllers;
 
+import com.alirf.finance.models.BankAccount;
 import com.alirf.finance.models.User;
+import com.alirf.finance.services.BankAccountService;
 import com.alirf.finance.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,19 +17,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("bank-accounts")
 @RequiredArgsConstructor
-@Tag(name = "Usuário", description = "Rota para gerenciamento de usuários.")
-public class UserController {
+@Tag(name = "Contas bancárias", description = "Rota para gerenciamento de contas bancárias.")
+public class BankAccountController {
 
     @Autowired
-    private UserService userService;
+    private BankAccountService bankAccountService;
 
     @GetMapping
     @ApiResponses(value = {
@@ -35,17 +36,17 @@ public class UserController {
             @ApiResponse(responseCode = "403", description = "Usuário não autorizado."),
             @ApiResponse(responseCode = "500", description = "Erro de requisição.")
     })
-    @Operation(summary = "Buscar usuários", description= "Busca usuários cadastrados no sistema")
+    @Operation(summary = "Buscar contas bancárias", description= "Busca contas bancárias cadastradas no sistema")
     public ResponseEntity<?> find(
-            @Parameter(description = "Nome do usuário") @RequestParam(required = false) String name,
+            @Parameter(description = "Nome da conta bancária") @RequestParam(required = false) String name,
             @Parameter(description = "Valores para paginação") @PageableDefault(
                     sort = "name",
                     direction = Sort.Direction.ASC,
                     page = 0,
                     size = 10) Pageable page
     ) {
-        Page<User> users = this.userService.find(name, page);
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        Page<BankAccount> bankAccounts = this.bankAccountService.find(name, page);
+        return new ResponseEntity<>(bankAccounts, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -54,40 +55,40 @@ public class UserController {
             @ApiResponse(responseCode = "403", description = "Usuário não autorizado."),
             @ApiResponse(responseCode = "500", description = "Erro de requisição.")
     })
-    @Operation(summary = "Buscar usuário", description= "Busca um usuário cadastrado no sistema")
+    @Operation(summary = "Buscar conta bancária", description= "Busca uma conta bancária cadastrada no sistema")
     public ResponseEntity<?> getById(
-            @Parameter(description = "ID do usuário") @PathVariable UUID id
+            @Parameter(description = "ID da conta bancária") @PathVariable UUID id
     ) {
-        User user = this.userService.getById(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        BankAccount bankAccount = this.bankAccountService.getById(id);
+        return new ResponseEntity<>(bankAccount, HttpStatus.OK);
     }
 
     @PostMapping()
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso."),
+            @ApiResponse(responseCode = "201", description = "Conta bancária cadastrada com sucesso."),
             @ApiResponse(responseCode = "403", description = "Usuário não autorizado."),
             @ApiResponse(responseCode = "500", description = "Erro de requisição.")
     })
-    @Operation(summary = "Criar usuário", description= "Cria um novo usuário")
+    @Operation(summary = "Criar conta bancária", description= "Cria uma nova conta bancária")
     public ResponseEntity<?> create(
-            @Parameter(description = "Dados do usuário a ser criado") @RequestBody User user
+            @Parameter(description = "Dados da conta bancária a ser criada") @RequestBody BankAccount bankAccount
     ) {
-        User createdUser = this.userService.insert(user);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+        BankAccount createdBankAccount = this.bankAccountService.insert(bankAccount);
+        return new ResponseEntity<>(createdBankAccount, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso."),
+            @ApiResponse(responseCode = "200", description = "Conta bancária atualizada com sucesso."),
             @ApiResponse(responseCode = "403", description = "Usuário não autorizado."),
             @ApiResponse(responseCode = "500", description = "Erro de requisição.")
     })
-    @Operation(summary = "Atualizar usuário", description= "Altera os dados de um usuário")
+    @Operation(summary = "Atualizar conta bancária", description= "Altera os dados de uma conta bancária")
     public ResponseEntity<?> update(
-            @Parameter(description = "ID do usuário") @PathVariable UUID id,
-            @Parameter(description = "Dados do usuário a ser atualizado") @RequestBody User user
+            @Parameter(description = "ID da conta bancária") @PathVariable UUID id,
+            @Parameter(description = "Dados da conta bancária a ser atualizada") @RequestBody BankAccount bankAccount
     ) {
-        User updatedUser = this.userService.update(id, user);
-        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        BankAccount updatedBankAccount = this.bankAccountService.update(id, bankAccount);
+        return new ResponseEntity<>(updatedBankAccount, HttpStatus.OK);
     }
 }
