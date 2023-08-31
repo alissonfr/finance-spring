@@ -38,12 +38,12 @@ public class BankAccountService {
         return bankAccountRepository.save(user);
     }
 
-    public BankAccount getById(UUID id) {
+    public BankAccount getById(Integer id) {
         return bankAccountRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Conta bancária não encontrada:  " + id));
     }
 
-    public BankAccount update(UUID id, BankAccount user) {
+    public BankAccount update(Integer id, BankAccount user) {
         BankAccount bankAccountExists = getById(id);
 
         return this.bankAccountRepository.save(user);

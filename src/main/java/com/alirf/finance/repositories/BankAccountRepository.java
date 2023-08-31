@@ -10,5 +10,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface BankAccountRepository extends JpaRepository<BankAccount, UUID>, JpaSpecificationExecutor {
+public interface BankAccountRepository extends JpaRepository<BankAccount, Integer>, JpaSpecificationExecutor {
 }

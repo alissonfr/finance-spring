@@ -38,12 +38,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getById(UUID id) {
+    public User getById(Integer id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado:  " + id));
     }
 
-    public User update(UUID id, User user) {
+    public User update(Integer id, User user) {
         User userExists = getById(id);
 
         return this.userRepository.save(user);

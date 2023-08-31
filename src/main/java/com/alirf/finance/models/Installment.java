@@ -1,14 +1,11 @@
 package com.alirf.finance.models;
 
-import com.alirf.finance.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.Date;
 import java.util.UUID;
 
 @Builder
@@ -17,11 +14,17 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class BankAccount {
+public class Installment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    private BigDecimal balance;
+    private Date dateDue;
+    private Boolean isPaid;
+
+    @ManyToOne
+    @JoinColumn(name = "id_transaction")
+    private Transaction transaction;
+
+    // n da parcela?
 }

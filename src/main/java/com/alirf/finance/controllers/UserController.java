@@ -56,7 +56,7 @@ public class UserController {
     })
     @Operation(summary = "Buscar usuário", description= "Busca um usuário cadastrado no sistema")
     public ResponseEntity<?> getById(
-            @Parameter(description = "ID do usuário") @PathVariable UUID id
+            @Parameter(description = "ID do usuário") @PathVariable Integer id
     ) {
         User user = this.userService.getById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
@@ -84,7 +84,7 @@ public class UserController {
     })
     @Operation(summary = "Atualizar usuário", description= "Altera os dados de um usuário")
     public ResponseEntity<?> update(
-            @Parameter(description = "ID do usuário") @PathVariable UUID id,
+            @Parameter(description = "ID do usuário") @PathVariable Integer id,
             @Parameter(description = "Dados do usuário a ser atualizado") @RequestBody User user
     ) {
         User updatedUser = this.userService.update(id, user);

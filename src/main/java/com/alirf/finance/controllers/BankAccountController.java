@@ -57,7 +57,7 @@ public class BankAccountController {
     })
     @Operation(summary = "Buscar conta bancária", description= "Busca uma conta bancária cadastrada no sistema")
     public ResponseEntity<?> getById(
-            @Parameter(description = "ID da conta bancária") @PathVariable UUID id
+            @Parameter(description = "ID da conta bancária") @PathVariable Integer id
     ) {
         BankAccount bankAccount = this.bankAccountService.getById(id);
         return new ResponseEntity<>(bankAccount, HttpStatus.OK);
@@ -85,7 +85,7 @@ public class BankAccountController {
     })
     @Operation(summary = "Atualizar conta bancária", description= "Altera os dados de uma conta bancária")
     public ResponseEntity<?> update(
-            @Parameter(description = "ID da conta bancária") @PathVariable UUID id,
+            @Parameter(description = "ID da conta bancária") @PathVariable Integer id,
             @Parameter(description = "Dados da conta bancária a ser atualizada") @RequestBody BankAccount bankAccount
     ) {
         BankAccount updatedBankAccount = this.bankAccountService.update(id, bankAccount);
